@@ -1,13 +1,13 @@
-package com.sokima.weatherclient;
+package com.sokima.weather.telegram;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WeatherClientApplication {
+public class TelegramApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(WeatherClientApplication.class, args);
+        SpringApplication.run(TelegramApplication.class, args);
     }
 
 }

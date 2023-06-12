@@ -8,21 +8,20 @@
 
     <modules>
         <module>weather-api-service</module>
-        <module>weather-client-service</module>
+        <module>telegram-service</module>
+        <module>proto</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.12</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>com.sokima</groupId>
     <artifactId>weather</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>weather-project</name>
-    <description>weather-project</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
