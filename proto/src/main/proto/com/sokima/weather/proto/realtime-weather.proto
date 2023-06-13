@@ -37,9 +37,9 @@ service WeatherService {
   // send one city - get one weather response
   rpc fetchWeatherForCity(CityRequest) returns (WeatherReport);
 
+  // send multiple cities - get multiple weather response for each city
+  rpc fetchWeatherForCities(stream CityRequest) returns (stream WeatherReport);
+
   // send one region - get multiple weather response for each city
   rpc fetchWeatherForRegion(RegionRequest) returns (stream WeatherReport);
-
-  // send multiple regions - get multiple weather response for each city
-  rpc fetchWeatherWeatherForRegions(stream RegionRequest) returns (stream WeatherReport);
 }
