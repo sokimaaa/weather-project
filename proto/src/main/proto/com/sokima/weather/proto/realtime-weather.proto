@@ -2,5 +2,44 @@ syntax = "proto3";
 
 package com.sokima.weather.proto;
 
+import "com/sokima/weather/proto/common/common.proto";
+
 option java_multiple_files = true;
 option java_package = "com.sokima.weather.proto";
+
+message CityRequest {
+  // search options: by name, by coordinate
+  oneof SearchOption {
+    string name = 1;
+    common.Coordinate coordinate = 2;
+  }
+}
+
+message RegionRequest {
+  oneof SearchOption {
+    string region = 1;
+    string country = 2;
+  }
+}
+
+message WeatherReport {
+  float temperature_celsius = 1;
+  float feels_like_celsius = 2;
+  string condition = 3;
+  float wind_kph = 4;
+  float pressure_mb = 5;
+  float precipitation_mm = 6;
+  int32 humidity = 7;
+  bool is_day = 8;
+}
+
+service WeatherService {
+  // send one city - get one weather response
+  rpc fetchWeatherForCity(CityRequest) returns (WeatherReport);
+
+  // send multiple cities - get multiple weather response for each city
+  rpc fetchWeatherForCities(stream CityRequest) returns (stream WeatherReport);
+
+  // send one region - get multiple weather response for each city
+  rpc fetchWeatherForRegion(RegionRequest) returns (stream WeatherReport);
+}

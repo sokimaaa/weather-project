@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package com.sokima.weather.proto.common;
+
+option java_multiple_files = true;
+option java_package = "com.sokima.weather.proto.common";
+
+message Coordinate {
+  float latitude = 1;
+  float longitude = 2;
+}
