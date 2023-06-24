@@ -3,6 +3,8 @@ package com.sokima.weather.telegram.bot.command.simple;
 import com.sokima.weather.telegram.bot.command.AbstractTelegramCommand;
 import com.sokima.weather.telegram.bot.command.TelegramCommand;
 import com.sokima.weather.telegram.bot.command.flagable.FlagableTelegramCommand;
+import com.sokima.weather.telegram.bot.command.output.CommandOutput;
+import com.sokima.weather.telegram.bot.command.output.SingleStringCommandOutput;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,8 +38,8 @@ public class HelpTelegramCommand extends AbstractTelegramCommand implements Tele
     }
 
     @Override
-    public String execute() {
-        return appendWithFlaggedCommands(
+    public CommandOutput<?> execute() {
+        String helpMessage = appendWithFlaggedCommands(
                 appendWithCommands(
                         new StringBuilder()
                                 .append("I can help you with understanding Weather in different country.\n\n")
@@ -49,6 +51,7 @@ public class HelpTelegramCommand extends AbstractTelegramCommand implements Tele
                 .append("Email : ")
                 .append(contact)
                 .toString();
+        return SingleStringCommandOutput.create(helpMessage);
     }
 
     private StringBuilder appendWithCommands(StringBuilder stringBuilder) {

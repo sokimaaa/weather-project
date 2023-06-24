@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -24,7 +25,8 @@ public class GeneralUpdateParser extends AbstractUpdateParser {
      */
     private static final Map<String, Pattern> PARAM = Map.of(
             "coordinate", Pattern.compile("^([+-]?\\d+(?:\\.\\d+)?),([+-]?\\d+(?:\\.\\d+)?)$"),
-            "city", Pattern.compile("^([A-Za-z ]+)$")
+            "city", Pattern.compile("^([A-Za-z ]+)$"),
+            "country", Pattern.compile("^([a-zA-Z]{1,3})$")
     );
 
     @Value("${weather.command-parser.split.regex}")
@@ -36,6 +38,7 @@ public class GeneralUpdateParser extends AbstractUpdateParser {
     @Value("${weather.command-parser.start-symbol.flag}")
     private String flagSymbol;
 
+    @Lazy
     @Autowired
     @Qualifier("commands")
     private List<String> commands;
