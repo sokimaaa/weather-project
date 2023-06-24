@@ -1,28 +1,32 @@
 package com.sokima.weather.telegram.bot.command;
 
+import com.sokima.weather.telegram.bot.command.output.CommandOutput;
+import com.sokima.weather.telegram.bot.command.output.ThrowableCommandOutput;
+import com.sokima.weather.telegram.domain.UserQueryHolder;
 import com.sokima.weather.telegram.exception.UnsupportedCommandException;
 import lombok.extern.slf4j.Slf4j;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Slf4j
 public abstract class AbstractTelegramCommand implements TelegramCommand {
 
-    protected Message message;
+    protected UserQueryHolder context;
 
     @Override
-    public String execute() {
+    public CommandOutput<?> execute() {
         log.error("Command[{}] can't be executed without params.", command());
-        throw new UnsupportedCommandException("Try to execute command without params.");
+        UnsupportedCommandException exception = new UnsupportedCommandException("Try to execute command without params.");
+        return ThrowableCommandOutput.create(exception);
     }
 
     @Override
-    public String execute(String[] params) {
+    public CommandOutput<?> execute(String[] params) {
         log.error("Command[{}] can't be executed with params.", command());
-        throw new UnsupportedCommandException("Try to execute command with params.");
+        UnsupportedCommandException exception = new UnsupportedCommandException("Try to execute command with params.");
+        return ThrowableCommandOutput.create(exception);
     }
 
     @Override
-    public void setMessage(Message message) {
-        this.message = message;
+    public void setContext(UserQueryHolder context) {
+        this.context = context;
     }
 }

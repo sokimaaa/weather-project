@@ -7,7 +7,7 @@ import java.util.Arrays;
 public abstract class AbstractFlagableTelegramCommand extends AbstractTelegramCommand implements FlagableTelegramCommand {
 
     private static final String BLANK = "";
-    private String[] flags;
+    private String[] flags = new String[0];
 
     @Override
     public void setFlags(String[] flags) {

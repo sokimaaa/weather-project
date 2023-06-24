@@ -1,6 +1,7 @@
 package com.sokima.weather.telegram.bot.command;
 
-import org.telegram.telegrambots.meta.api.objects.Message;
+import com.sokima.weather.telegram.bot.command.output.CommandOutput;
+import com.sokima.weather.telegram.domain.UserQueryHolder;
 
 public interface TelegramCommand {
 
@@ -15,19 +16,19 @@ public interface TelegramCommand {
     /**
      * Does logic for command and returns text for user.
      *
-     * @return string
+     * @return {@link CommandOutput}
      */
-    String execute();
+    CommandOutput<?> execute();
 
     /**
      * Does logic for command and returns text for user.
      *
-     * @return string
+     * @return {@link CommandOutput}
      */
-    String execute(String[] params);
+    CommandOutput<?> execute(String[] params);
 
     /**
-     * @param message the context for execution
+     * @param holder the context for execution
      */
-    void setMessage(Message message);
+    void setContext(UserQueryHolder holder);
 }

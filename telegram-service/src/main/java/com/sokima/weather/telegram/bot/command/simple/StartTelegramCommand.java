@@ -2,6 +2,8 @@ package com.sokima.weather.telegram.bot.command.simple;
 
 import com.sokima.weather.telegram.bot.command.AbstractTelegramCommand;
 import com.sokima.weather.telegram.bot.command.TelegramCommand;
+import com.sokima.weather.telegram.bot.command.output.CommandOutput;
+import com.sokima.weather.telegram.bot.command.output.SingleStringCommandOutput;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -15,14 +17,15 @@ public class StartTelegramCommand extends AbstractTelegramCommand implements Tel
     }
 
     @Override
-    public String execute() {
-        return new StringBuilder()
+    public CommandOutput<?> execute() {
+        String startMessage = new StringBuilder()
                 .append("Hello ")
-                .append(message.getFrom().getUserName())
+                .append(context.message().getFrom().getUserName())
                 .append("! :)\n\n")
                 .append("I am the SokimaWeatherBot and ")
                 .append("could be helpful with understanding weather in different cities.\n\n")
                 .append("Feel free to ask anything ;)")
                 .toString();
+        return SingleStringCommandOutput.create(startMessage);
     }
 }
