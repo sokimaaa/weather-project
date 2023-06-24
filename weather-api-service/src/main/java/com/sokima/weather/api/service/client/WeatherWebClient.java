@@ -8,21 +8,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
 import java.util.Objects;
 
-/**
- * Wrapper for {@link WebClient} to easily interact with weather api.
- */
-@Component
 @Slf4j
-public class WeatherWebClient {
+@Component
+public class WeatherWebClient extends AbstractWebClient {
 
-    private static final String JSON_TYPE = "application/json";
     private static final String REALTIME_URL = "/current.json";
     private static final String DEFAULT_LANG = "en";
 
@@ -34,7 +29,7 @@ public class WeatherWebClient {
         this.webClient = WebClient.builder()
                 .baseUrl(weatherConfiguration.getBaseUrl())
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, JSON_TYPE)
-                .filter(logRequest())
+                .filter(logRequestFilter())
                 .build()
         ;
     }
@@ -71,15 +66,5 @@ public class WeatherWebClient {
                 query,
                 Objects.isNull(lang) || lang.isBlank() ? DEFAULT_LANG : lang
         );
-    }
-
-    private ExchangeFilterFunction logRequest() {
-        return (clientRequest, next) -> {
-            log.info("Request: {} {}", clientRequest.method(), clientRequest.url());
-            clientRequest.headers().forEach(
-                    (name, values) -> values.forEach(value -> log.info("{}={}", name, value))
-            );
-            return next.exchange(clientRequest);
-        };
     }
 }
